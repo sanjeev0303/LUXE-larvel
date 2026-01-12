@@ -87,18 +87,30 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
-# Create startup script - clear config/route/view caches
+# Create startup script - force file-based caching and sessions
 RUN echo '#!/bin/bash\n\
 set -e\n\
+\n\
+# Force environment variables to prevent Redis usage\n\
+export CACHE_DRIVER=file\n\
+export CACHE_STORE=file\n\
+export SESSION_DRIVER=file\n\
+export QUEUE_CONNECTION=sync\n\
+\n\
+echo "Environment: CACHE_STORE=$CACHE_STORE SESSION_DRIVER=$SESSION_DRIVER"\n\
+\n\
 echo "Clearing config caches..."\n\
-php artisan config:clear\n\
-php artisan route:clear\n\
-php artisan view:clear\n\
-rm -rf storage/framework/cache/data/*\n\
+php artisan config:clear || true\n\
+php artisan route:clear || true\n\
+php artisan view:clear || true\n\
+rm -rf storage/framework/cache/data/* || true\n\
+rm -rf bootstrap/cache/*.php || true\n\
+\n\
 echo "Rebuilding caches..."\n\
 php artisan config:cache\n\
 php artisan route:cache\n\
 php artisan view:cache\n\
+\n\
 echo "Starting Apache..."\n\
 apache2-foreground' > /usr/local/bin/start.sh \
     && chmod +x /usr/local/bin/start.sh
