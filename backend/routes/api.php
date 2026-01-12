@@ -13,6 +13,15 @@ use App\Http\Controllers\PaymentController;
 |--------------------------------------------------------------------------
 */
 
+// Health Check Route for Render
+Route::get('/health', function () {
+    return response()->json([
+        'status' => 'ok',
+        'timestamp' => now()->toIso8601String(),
+        'service' => 'Laravel API'
+    ]);
+});
+
 // Public Routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
