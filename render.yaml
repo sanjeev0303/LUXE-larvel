@@ -46,6 +46,8 @@ services:
           property: password
       - key: CACHE_DRIVER
         value: file
+      - key: CACHE_STORE
+        value: file
       - key: SESSION_DRIVER
         value: file
       - key: QUEUE_CONNECTION
