@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_MEMORY_LIMIT=-1
 
-# Set Laravel environment defaults (to avoid Redis dependency)
+# Set Laravel environment defaults
 ENV CACHE_DRIVER=file
 ENV CACHE_STORE=file
 ENV SESSION_DRIVER=file
@@ -87,7 +87,7 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
-# Create startup script - only clear config/route/view caches (not cache:clear which touches Redis)
+# Create startup script - clear config/route/view caches
 RUN echo '#!/bin/bash\n\
 set -e\n\
 echo "Clearing config caches..."\n\
