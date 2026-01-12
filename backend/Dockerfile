@@ -87,14 +87,14 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
-# Create startup script - clear cache first to pick up env vars
+# Create startup script - only clear config/route/view caches (not cache:clear which touches Redis)
 RUN echo '#!/bin/bash\n\
 set -e\n\
-echo "Clearing caches..."\n\
+echo "Clearing config caches..."\n\
 php artisan config:clear\n\
-php artisan cache:clear\n\
 php artisan route:clear\n\
 php artisan view:clear\n\
+rm -rf storage/framework/cache/data/*\n\
 echo "Rebuilding caches..."\n\
 php artisan config:cache\n\
 php artisan route:cache\n\
