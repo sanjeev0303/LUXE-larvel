@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap');
+
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@theme {
+  /* Premium Color Palette */
+  --color-primary: #0A0A0A;
+  --color-secondary: #141414;
+  --color-tertiary: #1E1E1E;
+  --color-accent: #C9A962;
+  --color-accent-hover: #B8983A;
+  --color-accent-light: rgba(201, 169, 98, 0.15);
+  --color-muted: #6B6B6B;
+  --color-text: #F5F5F5;
+  --color-text-secondary: #A0A0A0;
+  --color-glass: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-success: #4ADE80;
+  --color-error: #F87171;
+
+  /* Typography */
+  --font-sans: 'Outfit', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+
+  --backdrop-blur-xs: 2px;
+}
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: rgba(201, 169, 98, 0.3);
+    color: white;
+  }
+
+  body {
+    @apply bg-primary text-text font-sans;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif font-semibold tracking-tight;
+  }
+
+  h5, h6 {
+    @apply font-sans font-medium tracking-wide uppercase text-sm;
+  }
+}
+
+@layer components {
+  /* Primary Button - Filled */
+  .btn-primary {
+    @apply relative px-8 py-3.5 bg-text text-primary font-medium tracking-widest text-sm uppercase;
+    @apply transition-all duration-300 ease-out;
+    @apply disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary:hover {
+    @apply bg-accent text-primary;
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  /* Secondary Button - Outlined */
+  .btn-outline {
+    @apply relative px-8 py-3.5 border border-glass-border text-text font-medium tracking-widest text-sm uppercase;
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .btn-outline:hover {
+    @apply border-accent text-accent;
+  }
+
+  .btn-outline:active {
+    transform: scale(0.98);
+  }
+
+  /* Accent Button */
+  .btn-accent {
+    @apply relative px-8 py-3.5 bg-accent text-primary font-medium tracking-widest text-sm uppercase;
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .btn-accent:hover {
+    @apply bg-accent-hover;
+  }
+
+  .btn-accent:active {
+    transform: scale(0.98);
+  }
+
+  /* Ghost Button */
+  .btn-ghost {
+    @apply px-4 py-2 text-text-secondary font-medium text-sm tracking-wide;
+    @apply transition-colors duration-200;
+  }
+
+  .btn-ghost:hover {
+    @apply text-accent;
+  }
+
+  /* Input Fields */
+  .input-field {
+    @apply w-full bg-secondary border border-glass-border px-5 py-4 text-text text-sm;
+    @apply transition-all duration-200;
+  }
+
+  .input-field::placeholder {
+    @apply text-muted;
+  }
+
+  .input-field:focus {
+    @apply outline-none border-accent/50 ring-1 ring-accent/20;
+  }
+
+  /* Glass Panel */
+  .glass-panel {
+    @apply bg-glass backdrop-blur-lg border border-glass-border;
+  }
+
+  /* Card Hover Effect */
+  .card-hover {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px -12px rgba(201, 169, 98, 0.05);
+  }
+
+  /* Product Card - using regular CSS for group behavior */
+  .product-card {
+    @apply relative overflow-hidden bg-secondary;
+  }
+
+  .product-card-image {
+    @apply w-full h-full object-cover transition-transform duration-700 ease-out;
+  }
+
+  .product-card-overlay {
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.8), transparent, transparent);
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 text-xs font-medium tracking-wider uppercase;
+  }
+
+  .badge-accent {
+    @apply inline-flex items-center px-3 py-1 text-xs font-medium tracking-wider uppercase;
+    @apply bg-accent-light text-accent border border-accent/30;
+  }
+
+  .badge-success {
+    @apply inline-flex items-center px-3 py-1 text-xs font-medium tracking-wider uppercase;
+    background-color: rgba(74, 222, 128, 0.1);
+    @apply text-success border border-success/20;
+  }
+
+  /* Divider */
+  .divider {
+    @apply border-t border-glass-border;
+  }
+
+  /* Link Styles */
+  .link-underline {
+    @apply relative inline-block;
+  }
+
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-px bg-accent transition-all duration-300;
+  }
+
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background-color: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #1E1E1E;
+  border-radius: 9999px;
+  transition: background-color 0.2s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6B6B6B;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus States */
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(201, 169, 98, 0.5), 0 0 0 4px #0A0A0A;
+}
