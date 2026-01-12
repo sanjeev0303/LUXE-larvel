@@ -5,6 +5,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_MEMORY_LIMIT=-1
 
+# Set Laravel environment defaults (to avoid Redis dependency)
+ENV CACHE_DRIVER=file
+ENV CACHE_STORE=file
+ENV SESSION_DRIVER=file
+ENV QUEUE_CONNECTION=sync
+ENV LOG_CHANNEL=stderr
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     libpng-dev \
